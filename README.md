@@ -4,6 +4,9 @@ This document details the steps followed to set up a three-tier web architecture
 
 ## 1. VPC (Virtual Private Cloud) Configuration
 
+![image](https://github.com/user-attachments/assets/d30c002f-3daa-4ae5-870c-ddc6084fba4c)
+
+
 The first step involved establishing the isolated network environment. A VPC named "project" was created in the `us-east-1` region. To ensure high availability, this VPC spans two Availability Zones (AZs): `us-east-1a` (AZ1) and `us-east-1b` (AZ2). Within each of these zones, a subnet infrastructure was configured, comprising one public subnet and three private subnets. This segmentation allows for the separation of publicly accessible resources from those that must remain private.
 
 To enable communication between the VPC and the internet, an Internet Gateway was created and attached to the "project" VPC. To allow instances located in the private subnets to access the internet for updates or external API calls without being directly exposed, two NAT (Network Address Translation) Gateways were set up, one in each Availability Zone.
