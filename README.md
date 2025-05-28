@@ -1,4 +1,4 @@
-![image2f](https://github.com/user-attachments/assets/b9b3ba33-54e9-44f2-9cbb-c97680d20c5c)# AWS Three-Tier Architecture Configuration Guide
+# AWS Three-Tier Architecture Configuration Guide
 
 This document details the steps followed to set up a three-tier web architecture on Amazon Web Services (AWS).
 
