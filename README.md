@@ -48,17 +48,17 @@ Following the network configuration, the next step was defining firewall rules u
 
 
 *   A security group for the bastion host, allowing SSH access from specific IP addresses for secure administration.
-*   ![imageb](https://github.com/user-attachments/assets/2bccd1a4-b095-4ee0-b150-fd18c6ff0f2a)
+  ![imageb](https://github.com/user-attachments/assets/2bccd1a4-b095-4ee0-b150-fd18c6ff0f2a)
 *   A security group for the internet-facing load balancer, permitting HTTP and HTTPS traffic from the internet.
-*   
+   
 *   A security group for the web servers, allowing traffic from the public load balancer and potentially the bastion host.
-*   ![imagef](https://github.com/user-attachments/assets/808982dc-49a3-4631-a9e5-d3d5c610956b)
+   ![imagef](https://github.com/user-attachments/assets/808982dc-49a3-4631-a9e5-d3d5c610956b)
 *   A security group for the internal load balancer, allowing traffic from the web servers.
-*   ![image11](https://github.com/user-attachments/assets/557ba70d-b685-41be-8d89-506886e5f388)
+   ![image11](https://github.com/user-attachments/assets/557ba70d-b685-41be-8d89-506886e5f388)
 *   A security group for the application servers, allowing traffic from the internal load balancer and potentially the bastion host.
-*   ![image13](https://github.com/user-attachments/assets/15615100-4e3a-45d4-a891-2d66224cddd4)
+   ![image13](https://github.com/user-attachments/assets/15615100-4e3a-45d4-a891-2d66224cddd4)
 *   A security group for the database (RDS), restricting access to the database port solely from the application servers and the bastion host.
-*   ![image9](https://github.com/user-attachments/assets/e442da84-0c46-49f3-bf62-fa90392b3c04)
+   ![image9](https://github.com/user-attachments/assets/e442da84-0c46-49f3-bf62-fa90392b3c04)
 
 
 ## 3. Database Deployment (RDS)
