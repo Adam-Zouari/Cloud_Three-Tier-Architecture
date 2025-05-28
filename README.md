@@ -48,30 +48,43 @@ Following the network configuration, the next step was defining firewall rules u
 
 
 *   A security group for the bastion host, allowing SSH access from specific IP addresses for secure administration.
+  
   ![imageb](https://github.com/user-attachments/assets/2bccd1a4-b095-4ee0-b150-fd18c6ff0f2a)
+  
 *   A security group for the internet-facing load balancer, permitting HTTP and HTTPS traffic from the internet.
    
 *   A security group for the web servers, allowing traffic from the public load balancer and potentially the bastion host.
+  
    ![imagef](https://github.com/user-attachments/assets/808982dc-49a3-4631-a9e5-d3d5c610956b)
+   
 *   A security group for the internal load balancer, allowing traffic from the web servers.
+  
    ![image11](https://github.com/user-attachments/assets/557ba70d-b685-41be-8d89-506886e5f388)
+   
 *   A security group for the application servers, allowing traffic from the internal load balancer and potentially the bastion host.
+  
    ![image13](https://github.com/user-attachments/assets/15615100-4e3a-45d4-a891-2d66224cddd4)
+   
 *   A security group for the database (RDS), restricting access to the database port solely from the application servers and the bastion host.
+  
    ![image9](https://github.com/user-attachments/assets/e442da84-0c46-49f3-bf62-fa90392b3c04)
 
 
 ## 3. Database Deployment (RDS)
 
 For the data persistence layer, a relational database instance was deployed using Amazon RDS (Relational Database Service). A MySQL instance of type `db.t3.micro` with 20 GB of storage was created and named `projectdb`. To ensure resilience, the primary instance was placed in Availability Zone AZ1 (`us-east-1a`), and a standby instance was configured in AZ2 (`us-east-1b`). RDS automatically handles replication and failover in case the primary instance fails.
+
 ![image15](https://github.com/user-attachments/assets/e10835b0-e744-497c-9bfe-6850db9f0401)
+
 ![image16](https://github.com/user-attachments/assets/8d817662-2d49-4b60-a389-813f795e69d9)
+
 ![image17](https://github.com/user-attachments/assets/fbe04010-bccc-40f1-84e1-49bccabe2c91)
+
 ![image18](https://github.com/user-attachments/assets/8b8dead0-0ce8-4afb-b924-eba08ce3eedb)
 
 ## 4. Instances Creation
 
-1.  A Bastion Host EC2 instance to provide a secure access point to private instances.
+### 1.  A Bastion Host EC2 instance to provide a secure access point to private instances.
    
 An SSH key pair (`Host.pem`) was generated during the creation of the Bastion Host and reused for the other instances to simplify access management.
 
@@ -85,11 +98,11 @@ An Elastic IP address was associated with the Bastion Host to provide a static p
 Connection to the private servers is made via the Bastion Host. After connecting to the Bastion, the private key (`Host.pem`) was copied onto it, subsequently allowing an SSH connection to the private server.
 
 
-2.  A Web Server EC2 instance.
+### 2.  A Web Server EC2 instance.
    
 ![image1b](https://github.com/user-attachments/assets/99bf7d35-78a4-409f-8cb3-f2391a22cef5)
 
-4.  An Application Server EC2 instance.
+### 3.  An Application Server EC2 instance.
 
 ![image1a](https://github.com/user-attachments/assets/e95527b7-0754-4949-8f27-628889a76a60)
 
@@ -117,7 +130,9 @@ Note: It is possible to include the password in the previous command to connect 
 ```
 
 ![image1e](https://github.com/user-attachments/assets/96371aa0-8a7b-4f41-ac0c-5a09c51a2bd0)
+
 ![image1f](https://github.com/user-attachments/assets/5570a892-2c4a-4cb4-ba14-78cb706dc211)
+
 ![image20](https://github.com/user-attachments/assets/5be5bb5f-dc86-421b-b494-7b63c6a88b6b)
 
 Next, the Node.js environment was configured using NVM (Node Version Manager), and the PM2 process manager was installed to run the Node.js application in the background and ensure its availability:
@@ -144,11 +159,13 @@ pm2 save # Save PM2 configuration for automatic restarts
 ```
 
 ![image21](https://github.com/user-attachments/assets/d31539ce-c1c9-45eb-96c2-80668019f397)
+
 ![image22](https://github.com/user-attachments/assets/a8f2cfde-c1fc-452d-af4b-4bd48aaa8114)
 
 Once the application server was configured and the application was functional, an Amazon Machine Image (AMI) was created from this instance. This AMI serves as a template for launching new, identical application server instances.
 
 ![image23](https://github.com/user-attachments/assets/df08c5aa-cea7-4d4f-9bc3-b068eeb663f4)
+
 ![image24](https://github.com/user-attachments/assets/7d431cd8-ed32-4141-a140-4a336a27bf0d)
 
 To distribute incoming traffic to the application instances and improve availability, a Target Group named `AppTargetGroup` was created.
@@ -273,6 +290,7 @@ sudo systemctl status nginx
 As with the application tier, an AMI was created from this configured web server instance.
 
 ![image2c](https://github.com/user-attachments/assets/bb3355fd-86d3-4be3-800f-70d033abbebc)
+
 ![image2d](https://github.com/user-attachments/assets/a5e24192-0190-4090-b54c-16dc92d3a8e9)
 
 A Target Group were created.
