@@ -1,17 +1,41 @@
 # AWS Three-Tier Architecture Configuration Guide
 
-This document details the steps followed to set up a three-tier web architecture on Amazon Web Services (AWS), based on the initial report by Zouari Adem.
+This document details the steps followed to set up a three-tier web architecture on Amazon Web Services (AWS).
 
 ## 1. VPC (Virtual Private Cloud) Configuration
 
-![image](https://github.com/user-attachments/assets/d30c002f-3daa-4ae5-870c-ddc6084fba4c)
-
-
 The first step involved establishing the isolated network environment. A VPC named "project" was created in the `us-east-1` region. To ensure high availability, this VPC spans two Availability Zones (AZs): `us-east-1a` (AZ1) and `us-east-1b` (AZ2). Within each of these zones, a subnet infrastructure was configured, comprising one public subnet and three private subnets. This segmentation allows for the separation of publicly accessible resources from those that must remain private.
 
-To enable communication between the VPC and the internet, an Internet Gateway was created and attached to the "project" VPC. To allow instances located in the private subnets to access the internet for updates or external API calls without being directly exposed, two NAT (Network Address Translation) Gateways were set up, one in each Availability Zone.
+![image](https://github.com/user-attachments/assets/2381d0c3-e0fd-4bb9-acb6-5c9e4aecd5a9)
 
-Network traffic management within the VPC was configured using distinct route tables. A public route table was associated with the public subnets, directing traffic destined outside the VPC (0.0.0.0/0) to the Internet Gateway. For the private subnets, two separate route tables were created: "Private route table AZ1" for the private subnets in `us-east-1a` and "Private route table AZ2" for those in `us-east-1b`. The AZ1 private route table routes outbound traffic to the NAT Gateway located in `us-east-1a`. The configuration of the AZ2 private route table is similar, directing traffic to its own NAT Gateway in `us-east-1b` and being associated with the corresponding private subnets.
+
+To enable communication between the VPC and the internet, an Internet Gateway was created and attached to the "project" VPC.
+
+![image2](https://github.com/user-attachments/assets/611ba407-3388-449d-bdf4-22229eaa40cd)
+
+
+To allow instances located in the private subnets to access the internet for updates or external API calls without being directly exposed, two NAT (Network Address Translation) Gateways were set up, one in each Availability Zone.
+
+![image3](https://github.com/user-attachments/assets/a1c64456-bc86-423f-86c5-16334beeb59f)
+
+
+Network traffic management within the VPC was configured using distinct route tables.
+
+![image4](https://github.com/user-attachments/assets/348cb45d-cd16-4f6b-af0f-29d3adf290f8)
+
+
+A public route table was associated with the public subnets, directing traffic destined outside the VPC (0.0.0.0/0) to the Internet Gateway.
+
+![image5](https://github.com/user-attachments/assets/6e22fb34-1534-435a-ba1b-110b2628d98f)
+
+![image6](https://github.com/user-attachments/assets/fa4ff336-1a8e-4cfb-bda2-4a6757f8f6c8)
+
+For the private subnets, two separate route tables were created: "Private route table AZ1" for the private subnets in `us-east-1a` and "Private route table AZ2" for those in `us-east-1b`. The AZ1 private route table routes outbound traffic to the NAT Gateway located in `us-east-1a`. The configuration of the AZ2 private route table is similar, directing traffic to its own NAT Gateway in `us-east-1b` and being associated with the corresponding private subnets.
+
+![image7](https://github.com/user-attachments/assets/3a1b6f2b-0fb4-4791-88a8-3b139e77f6c2)
+
+![image8](https://github.com/user-attachments/assets/1e599731-2831-43bf-81b8-13f9fe4e0622)
+
 
 ## 2. Security Group Setup
 
