@@ -2,6 +2,8 @@
 
 This document details the steps followed to set up a three-tier web architecture on Amazon Web Services (AWS).
 
+![image](https://github.com/user-attachments/assets/5efaf339-63a0-47fd-9a31-b1e675e6de0e)
+
 ## 1. VPC (Virtual Private Cloud) Configuration
 
 The first step involved establishing the isolated network environment. A VPC named "project" was created in the `us-east-1` region.
